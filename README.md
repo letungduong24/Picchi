@@ -30,7 +30,7 @@ Thiết kế và phát triển giao diện người dùng cho **Picchi** – m�
 
 ## 🔧 Chức năng đã phát triển
 
-### 📃 1. Đăng tin
+### 📸 1. Đăng tin
 - Tạo tin mới
 
 ### 📃 2. Xem bảng tin, xem chi tiết tin, tương tác với tin
@@ -41,7 +41,7 @@ Thiết kế và phát triển giao diện người dùng cho **Picchi** – m�
 - Xem danh sách bạn bè.
 - Tìm kiếm người dùng.
 
-### 📸 3=4. Quản lý tin (Stories)
+### 📃 4. Quản lý tin (Stories)
 - Xem các tin đã từng đăng của bản thân.
 - Xóa tin
 
