@@ -10,16 +10,22 @@ import Feed from './Pages/Feed';
 import Friend from './Pages/Friend';
 import Grid from './Pages/Grid';
 import StoryManager from './Pages/StoryManager';
+import Navbar from "./Components/Common/Navbar";
+import StoryCreate from "./Pages/StoryCreate";
 
 const App = () => {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Feed />} />
-        <Route path="/friend" element={<Friend />} />
-        <Route path="/grid" element={<Grid />} />
-        <Route path="/storymanager" element={<StoryManager />} />
-      </Routes>
+      <div className="flex flex-col h-screen">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Feed />} />
+          <Route path="/friend" element={<Friend />} />
+          <Route path="/create-story" element={<StoryCreate />} />
+          <Route path="/grid" element={<Grid />} />
+          <Route path="/storymanager" element={<StoryManager />} />
+        </Routes>
+      </div>
     </Router>
   );
 };
