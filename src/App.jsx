@@ -12,6 +12,7 @@ import Grid from './Pages/Grid';
 import StoryManager from './Pages/StoryManager';
 import Navbar from "./Components/Common/Navbar";
 import StoryCreate from "./Pages/StoryCreate";
+import StoryDetail from "./Pages/StoryDetail";
 import useConfirmStore from "./store/confirmStore";
 import Confirm from "./Components/Common/Confirm";
 import useSuccessStore from "./store/successStore";
@@ -63,6 +64,7 @@ const App = () => {
           <Route path="/create-story" element={<StoryCreate />} />
           <Route path="/grid" element={<Grid />} />
           <Route path="/storymanager" element={<StoryManager />} />
+          <Route path="/story/:id" element={<StoryDetail />} />
         </Routes>
       </div>
     </Router>
