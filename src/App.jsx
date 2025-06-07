@@ -12,7 +12,7 @@ import Grid from './Pages/Grid';
 import StoryManager from './Pages/StoryManager';
 import Navbar from "./Components/Common/Navbar";
 import StoryCreate from "./Pages/StoryCreate";
-
+import StoryDetail from "./Pages/StoryDetail";
 const App = () => {
   return (
     <Router>
@@ -24,6 +24,7 @@ const App = () => {
           <Route path="/create-story" element={<StoryCreate />} />
           <Route path="/grid" element={<Grid />} />
           <Route path="/storymanager" element={<StoryManager />} />
+          <Route path="/story/:id" element={<StoryDetail />} />
         </Routes>
       </div>
     </Router>
