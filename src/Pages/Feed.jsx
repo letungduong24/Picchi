@@ -3,9 +3,11 @@ import { MdFilterListAlt } from "react-icons/md";
 import Default from '../assets/default.png'
 import User from '../assets/user.png'
 import SmallStory from '../Components/Story/SmallStory';
+import useFeedStore from '../store/feedStore';
 
 
 const Feed = () => {
+  const {stories} = useFeedStore();
   return (
     <div className='p-[20px] bg-(--color-gray) flex-1 flex flex-col gap-3'>
       <div className="topbar flex justify-between items-center">
@@ -17,16 +19,9 @@ const Feed = () => {
       </div>
 
       <div className="feed-wrapper grid-cols-5 grid gap-5 p-[30px] bg-white rounded-[20px]">
-          <SmallStory name={'User'} avatar={User} time={'3 phút trước'} storyImg={Default} />
-          <SmallStory name={'User'} avatar={User} time={'3 phút trước'} storyImg={Default} />
-          <SmallStory name={'User'} avatar={User} time={'3 phút trước'} storyImg={Default} />
-          <SmallStory name={'User'} avatar={User} time={'3 phút trước'} storyImg={Default} />
-          <SmallStory name={'User'} avatar={User} time={'3 phút trước'} storyImg={Default} />
-          <SmallStory name={'User'} avatar={User} time={'3 phút trước'} storyImg={Default} />
-          <SmallStory name={'User'} avatar={User} time={'3 phút trước'} storyImg={Default} />
-          <SmallStory name={'User'} avatar={User} time={'3 phút trước'} storyImg={Default} />
-          <SmallStory name={'User'} avatar={User} time={'3 phút trước'} storyImg={Default} />
-          <SmallStory name={'User'} avatar={User} time={'3 phút trước'} storyImg={Default} />
+          {stories && stories.map((story) => (
+            <SmallStory name={story.name} avatar={story.avatar} time={story.time} storyImg={story.storyImg} />
+          ))}
       </div>
     </div>
   )

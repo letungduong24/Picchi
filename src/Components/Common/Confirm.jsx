@@ -46,15 +46,15 @@ const Confirm = ({title, content, trueButton, handleTrue, handleFalse}) => {
           <div className="flex gap-2 w-full justify-end">
             <button
               onClick={handleTrue}
-              className="bg-[#1A0B47] text-white py-1 px-4 rounded-[20px] hover:bg-opacity-90 transition-colors text-[20px] font-medium cursor-pointer w-fit"
+              className="bg-(--color-violet) hover:bg-[#58467e] duration-300 transition-all text-white py-1 px-4 rounded-[20px] text-[20px]  cursor-pointer w-fit"
             >
               {trueButton}
             </button>
 
             <button
               onClick={handleFalse}
-              className="text-(--color-violet) px-4 py-1 rounded-[20px] text-[20px] font-medium border border-(--color-violet) hover:bg-gray-100 transition cursor-pointer w-fit"
-              style={{ backgroundColor: "white" }}
+              className="text-(--color-violet) px-4 py-1 rounded-[20px] text-[20px]  border border-(--color-violet) hover:bg-violet-100 transition-all duration-300 cursor-pointer w-fit"
+              
             >
               Hủy
             </button>

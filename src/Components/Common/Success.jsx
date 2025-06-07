@@ -41,8 +41,8 @@ const Success = ({title, content, button, handleClose}) => {
             <div className="w-full flex justify-center">
               <button
                   onClick={handleClose}
-                  className="text-[var(--color-violet)] px-4 py-1 rounded-[20px] text-[20px] font-medium border border-[var(--color-violet)] hover:bg-gray-100 transition cursor-pointer"
-                  style={{ backgroundColor: "white" }}>
+                  className="text-[var(--color-violet)] px-4 py-1 rounded-[20px] text-[20px] font-medium border border-[var(--color-violet)] hover:bg-violet-100 transition cursor-pointer"
+              >
                     {button}
               </button>
             </div>

@@ -8,7 +8,7 @@ const SmallStory = ({storyImg, name, time, avatar}) => {
       style={{ backgroundImage: `url(${storyImg})` }}
       className="rounded-[20px] bg-cover bg-center w-full relative aspect-[3/4] p-[20px] "
     >
-      <div className="w-full h-full flex items-end z-10 justify-center">
+      <div className="cursor-pointer w-full h-full flex items-end z-10 justify-center">
         <div className="bg-white w-fit rounded-[60px] h-[20%] p-[10px] flex items-center justify-between">
           <div className="flex gap-1 h-full items-center">
             <img src={avatar} className="h-full rounded-full" alt="" />
