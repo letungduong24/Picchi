@@ -64,7 +64,7 @@ const App = () => {
           <Route path="/create-story" element={<StoryCreate />} />
           <Route path="/grid" element={<Grid />} />
           <Route path="/storymanager" element={<StoryManager />} />
-          <Route path="/story/:id" element={<StoryDetail />} />
+          <Route path="/story" element={<StoryDetail />} />
         </Routes>
       </div>
     </Router>
