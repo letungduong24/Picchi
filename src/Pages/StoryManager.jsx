@@ -27,9 +27,9 @@ const StoryManager = () => {
           deleteStory(story.id); 
           useConfirmStore.getState().hideConfirm(); 
           showSuccess({
-          title: 'Xóa tin',
-          content: 'Xóa tin thành công',
-          button: 'Đóng'
+            title: 'Xóa tin',
+            content: 'Xóa tin thành công',
+            button: 'Đóng'
         })
         } else {
           showError({
