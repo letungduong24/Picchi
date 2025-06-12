@@ -8,6 +8,7 @@ import ChatStory from "../Components/Chat/ChatStory";
 import InforStory from "../Components/Story/InfoStory";
 import useFeedStore from "../store/feedStore";
 import useErrorStore from "../store/errorStore";
+import useSuccessStore from "../store/successStore";
 import { FaHeart } from "react-icons/fa";
 
 const StoryDetail = () => {
@@ -16,14 +17,19 @@ const StoryDetail = () => {
   const { detailStory } = useFeedStore();
   const {showError, hideError} = useErrorStore();
   const [like, setLike] = useState(false)
-
+  const { showSuccess, hideSuccess } = useSuccessStore();
   const handleSetType = (type) => {
     setVisibleState(type);
   };
 
   const handleLike = () => {
-
-  }
+    setLike(!like);
+    showError({
+      title: "Thích tin",
+      content: "Thích tin thành công",
+      button: "Đóng",
+    });
+  };
 
   useEffect(() => {
     if(!detailStory){
@@ -81,9 +87,10 @@ const StoryDetail = () => {
                     <div className="bg-white h-full aspect-square flex justify-center items-center rounded-[20px]">
                       <button
                         className="text-red-500 hover:text-red-600 text-3xl cursor-pointer"
-                        onClick={() => setLike(!like)}
+                        // onClick={() => setLike(!like)}
+                        onClick={handleLike}
                       >
-                        {like ? <FaHeart  /> : <FaRegHeart />}
+                        {like ? <FaHeart /> : <FaRegHeart />}
                       </button>
                     </div>
                     <div className="bg-white h-full aspect-square flex justify-center items-center rounded-[20px]">
