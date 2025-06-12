@@ -37,8 +37,8 @@ const StoryDetail = () => {
   }, [detailStory])
 
   return (
-    <div className=" bg-[var(--color-gray)] flex-1 flex flex-col gap-3">
-      <div className="bg-white min-h-[500px] flex-1 p-[30px] rounded-[15px] flex justify-center items-center gap-0">
+    <div className=" bg-(--color-gray) flex-1 flex flex-col gap-3">
+      <div className="bg-(--color-gray) min-h-[500px] flex-1 p-[30px] rounded-[15px] flex justify-center items-center gap-0">
         {/* Story */}
         <div
           className="flex flex-col items-start justify-between gap-[10px] p-4 w-full max-w-[450px] aspect-[3/4] rounded-[20px] shadow-md border border-gray-200 bg-cover bg-center text-white"
