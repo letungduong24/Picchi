@@ -24,7 +24,7 @@ const StoryDetail = () => {
 
   const handleLike = () => {
     setLike(!like);
-    showError({
+    showSuccess({
       title: "Thích tin",
       content: "Thích tin thành công",
       button: "Đóng",
