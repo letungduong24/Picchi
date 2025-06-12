@@ -9,7 +9,7 @@ const Error = ({title, content, button, handleClose}) => {
       onClick={handleClose}
     >
       <div
-        className="bg-white rounded-[20px] p-4 relative w-[460px] shadow-lg"
+        className="bg-white rounded-[20px] p-4 relative  w-fit shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between w-full mb-2">
