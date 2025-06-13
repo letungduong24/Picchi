@@ -82,7 +82,7 @@ const StoryDetail = () => {
       return;
     }
 
-    setLike(true);
+    setLike(false);
     showSuccess({
       title: "Bỏ thích tin",
       content: "Bỏ thích tin thành công",
