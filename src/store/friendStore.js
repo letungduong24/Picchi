@@ -22,7 +22,6 @@ const useFriendStore = create((set, get) => ({
     { id: 7, name: 'Dương', avatar: avt, isError: false},
     { id: 8, name: 'Chung', avatar: avt, isError: false},
   ],
-<<<<<<< HEAD
    users: [
     { id: 1, name: 'An', avatar: avt,  isError: true },
     { id: 2, name: 'Bình', avatar: avt,  isError: true },
