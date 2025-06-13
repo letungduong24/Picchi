@@ -146,8 +146,4 @@ const Friend = () => {
   );
 };
 
-<<<<<<< HEAD
 export default Friend;
-=======
-export default Friend;
->>>>>>> main
