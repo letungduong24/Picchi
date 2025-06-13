@@ -2,27 +2,37 @@ import React, { useState } from "react";
 import { BsFillSendFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
 import useSuccessStore from "../../store/successStore";
+import useErrorStore from "../../store/errorStore";
+import { useNavigate } from "react-router-dom";
 
-const ChatStory = ({
-  handleClose,
-}) => {
-
-  const {showSuccess} = useSuccessStore();
-
-  const [formData, setFormData] = useState('')
-
-  const handleChatSubmit = (e) => {{
+const ChatStory = ({ handleClose, detailStory }) => {
+  const { showSuccess } = useSuccessStore();
+  const { showError } = useErrorStore();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState("");
+  const handleChatSubmit = (e) => {
     e.preventDefault();
+    //bat buoc phai nhap binh luan moi duoc gui
+    if (!formData.trim()) return;
+    if (detailStory?.likeOrChatError) {
+      showError({
+        title: "Lỗi tin",
+        content: "Tin không tồn tại.",
+        button: "Đóng",
+        onClose: () => navigate("/"),
+      });
+      return;
+    }
     showSuccess({
-      title: 'Bình luận',
-      content: 'Bình luận thành công',
-      button: 'Đóng'
-    })
-    setFormData('')
-  }}
+      title: "Bình luận",
+      content: "Bình luận thành công",
+      button: "Đóng",
+    });
+    setFormData("");
+  };
 
   return (
-    <div className=" w-full">
+    <div className="w-full">
       <div className="flex items-end">
         <button
           type="button"
@@ -51,6 +61,7 @@ const ChatStory = ({
           <div className="flex flex-col justify-center">
             <button
               type="submit"
+              onClick={handleChatSubmit}
               className="text-black-600 hover:text-gray-800 text-3xl cursor-pointer"
             >
               <BsFillSendFill />
