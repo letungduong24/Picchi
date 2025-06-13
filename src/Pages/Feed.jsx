@@ -16,7 +16,7 @@ const Feed = () => {
   return (
     <div className="p-[20px] bg-(--color-gray) flex-1 flex flex-col gap-3">
       <div className="topbar flex justify-between items-center">
-        <p className='font-bold text-2xl text-(--color-violet)'>Bảng tin</p>
+        <p className='font-bold text-2xl text-(--color-violet)'>BẢNG TIN</p>
         <div className="filter bg-white px-[21px] py-[10px] flex gap-[10px] rounded-[20px] items-center">
           <p className="font-semibold text-[var(--color-violet)] text-[15px] p-0 flex items-center leading-none">
             Tất cả

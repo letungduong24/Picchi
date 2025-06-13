@@ -84,7 +84,7 @@ const useFeedStore = create((set, get) => ({
       storyImg: p3,
       avatar: avt,
       isError: false,
-      likeOrChatError: true, // de bo sung LOI chat or like
+      likeOrChatError: true,
       content: "Hôm nay đẹp trời",
     },
     {
