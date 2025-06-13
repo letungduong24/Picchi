@@ -5,16 +5,10 @@ import RequestCard from "../Components/Friend/RequestCard";
 import useConfirmStore from "../store/confirmStore";
 import useSuccessStore from "../store/successStore";
 import useErrorStore from "../store/errorStore";
-<<<<<<< HEAD
 import SearchResult from '../Components/Friend/SearchResult';
 
 const Friend = () => {
   const {friends, requests, deleteFriend, deleteRequest, filteredUsers, setSearchUserTerm, searchUserTerm} = useFriendStore();
-=======
-
-const Friend = () => {
-  const {friends, requests, deleteFriend} = useFriendStore();
->>>>>>> main
   const [tab, setTab] = useState('friend')
   const {showConfirm} = useConfirmStore()
   const {showSuccess} = useSuccessStore();
@@ -48,8 +42,6 @@ const Friend = () => {
       },
     });
   }
-<<<<<<< HEAD
-
   const handleDeleteAccept = (request) => {
        if(request.isError){
               deleteRequest(request);   
@@ -119,8 +111,6 @@ const Friend = () => {
     });
   }
 };
-=======
->>>>>>> main
   return (
     <div>
       <div className="p-[20px] bg-(--color-gray) flex-1 flex flex-col gap-3">
@@ -132,13 +122,8 @@ const Friend = () => {
               <button onClick={() => handleChangeTab('request')} className={tab === 'request' ? 'border-b-2 border-(--color-violet)' : 'cursor-pointer'}>Lời mời kết bạn</button>
             </div>
             <div className="">
-<<<<<<< HEAD
               <form onSubmit={handleSearchSubmit} className="flex gap-[10px]">
                 <input className="border rounded-[100px] px-[10px] py-[5px]" type="text" placeholder="Tìm kiếm bạn bè"   value={searchUserTerm}  onChange={handleSearchChange} />
-=======
-              <form className="flex gap-[10px]" action="">
-                <input className="border rounded-[100px] px-[10px] py-[5px]" type="text" placeholder="Tìm kiếm bạn bè" />
->>>>>>> main
                 <button className="bg-(--color-violet) text-white font-bold text-sm px-[14px] py-[8px] rounded-[20px]" type="submit">Tìm</button>
               </form>
             </div>
@@ -149,14 +134,10 @@ const Friend = () => {
               <FriendCard handleDelete={() => handleDeleteFriend(friend)} avatar={friend.avatar} name={friend.name} />
             ))}
             {tab === 'request' && requests.map((request) => (
-<<<<<<< HEAD
               <RequestCard handleDeleteAccept={() => handleDeleteAccept(request)} handleDeleteDecline={() => handleDeleteDecline(request)} avatar={request.avatar} name={request.name} />
             ))}
               {tab === 'search' &&  filteredUsers().map((user) => (
               <SearchResult key={user.id} id={user.id} avatar={user.avatar} name={user.name} />
-=======
-              <RequestCard avatar={request.avatar} name={request.name} />
->>>>>>> main
             ))}
           </div>
         </div>
