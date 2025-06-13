@@ -3,6 +3,7 @@ import { create } from 'zustand';
 
 const useFriendStore = create((set, get) => ({
   friends: [
+<<<<<<< HEAD
     { id: 100, name:'Tú',  avatar: avt, isError: true},
     { id: 200, name: 'Giang', avatar: avt, isError: true},
     { id: 300, name: 'Tú', avatar: avt, isError: true},
@@ -12,6 +13,16 @@ const useFriendStore = create((set, get) => ({
     { id: 700, name: 'Dương', avatar: avt, isError: false},
     { id: 800, name: 'Chung', avatar: avt, isError: false},
     { id: 900, name: 'Chung', avatar: avt, isError: false},
+=======
+    { id: 1, name:'Tú',  avatar: avt, isError: true},
+    { id: 2, name: 'Giang', avatar: avt, isError: true},
+    { id: 3, name: 'Tú', avatar: avt, isError: true},
+    { id: 4, name: 'Chung', avatar: avt, isError: true},
+    { id: 5, name: 'Đức', avatar: avt, isError: true},
+    { id: 6, name: 'Giang', avatar: avt, isError: false},
+    { id: 7, name: 'Dương', avatar: avt, isError: false},
+    { id: 8, name: 'Chung', avatar: avt, isError: false},
+>>>>>>> main
   ],
     requests: [
     { id: 1, name:'Tú',  avatar: avt, isError: true},
@@ -23,6 +34,7 @@ const useFriendStore = create((set, get) => ({
     { id: 7, name: 'Dương', avatar: avt, isError: false},
     { id: 8, name: 'Chung', avatar: avt, isError: false},
   ],
+<<<<<<< HEAD
    users: [
     { id: 1, name: 'An', avatar: avt,  isError: true },
     { id: 2, name: 'Bình', avatar: avt,  isError: true },
@@ -47,14 +59,22 @@ const useFriendStore = create((set, get) => ({
     user.name.toLowerCase().includes(searchUserTerm.toLowerCase())
   );
 },
+=======
+>>>>>>> main
 
   deleteFriend: (id) => {
     const updatedFriends = get().friends.filter(friend => friend.id !== id);
     set({ friends: updatedFriends });
   },
+<<<<<<< HEAD
   deleteRequest: (id) => {
     const updatedRequests = get().requests.filter(request => request.id !==id);
     set({ requests: updatedRequests});
   }
 }));
+=======
+
+}));
+
+>>>>>>> main
 export default useFriendStore;

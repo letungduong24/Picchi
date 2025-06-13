@@ -4,7 +4,11 @@ const FriendCard = ({id, name, avatar, handleDelete}) => {
   return (
     <div className='w-full p-[20px] flex justify-between aspect-[4/1] bg-(--color-gray) rounded-[20px] items-center'>
       <div className="flex items-center gap-1">
+<<<<<<< HEAD
         <div className="w-[100px] h-[100px] rounded shrink-0">
+=======
+        <div className="w-[19%] rounded">
+>>>>>>> main
           <img className='rounded-full' src={avatar} alt="" />
         </div>
         <div className="font-bold text-xl">{name}</div>
