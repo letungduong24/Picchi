@@ -63,10 +63,29 @@ const StoryDetail = () => {
       return;
     }
 
-    setLike(!like);
+    setLike(true);
     showSuccess({
       title: "Thích tin",
       content: "Thích tin thành công",
+      button: "Đóng",
+    });
+  };
+
+  const handleUnlike = () => {
+    if (detailStory?.likeOrChatError) {
+      showError({
+        title: "Lỗi tin",
+        content: "Tin không tồn tại!",
+        button: "Đóng",
+        onClose: () => navigate("/"),
+      });
+      return;
+    }
+
+    setLike(true);
+    showSuccess({
+      title: "Bỏ thích tin",
+      content: "Bỏ thích tin thành công",
       button: "Đóng",
     });
   };
@@ -97,7 +116,7 @@ const StoryDetail = () => {
       <div className="bg-white min-h-[500px] flex-1 p-[30px] rounded-[25px] flex justify-center items-center gap-4">
         {/* left */}
         <button
-          className=" text-5xl bg-white/80 rounded-full p-2"
+          className=" text-5xl bg-white/80 rounded-full p-2 cursor-pointer"
           onClick={prevStory}
         >
           <PiArrowCircleLeftThin />
@@ -105,7 +124,7 @@ const StoryDetail = () => {
 
         {/* Story */}
         <div
-          className="flex flex-col items-start justify-between gap-[10px] p-4 w-full max-w-[450px] aspect-[3/4] rounded-[20px] shadow-md border border-gray-200 bg-cover bg-center text-white"
+          className="flex flex-col items-start justify-between gap-[10px] p-4 h-full aspect-[3/4]  rounded-[20px] shadow-md border border-gray-200 bg-cover bg-center text-white"
           style={{
             backgroundImage: `url(${
               detailStory ? detailStory.storyImg : Default
@@ -143,12 +162,21 @@ const StoryDetail = () => {
                 {detailStory ? (
                   <>
                     <div className="bg-white h-full aspect-square flex justify-center items-center rounded-[20px]">
-                      <button
+                      {!like ? (
+                        <button
                         className="text-red-500 hover:text-red-600 text-3xl cursor-pointer"
                         onClick={handleLike}
                       >
-                        {like ? <FaHeart /> : <FaRegHeart />}
+                        <FaRegHeart />
                       </button>
+                      ) : (
+                        <button
+                        className="text-red-500 hover:text-red-600 text-3xl cursor-pointer"
+                        onClick={handleUnlike}
+                      >
+                        <FaHeart />
+                      </button>
+                      )}
                     </div>
                     <div className="bg-white h-full aspect-square flex justify-center items-center rounded-[20px]">
                       <button
@@ -176,7 +204,7 @@ const StoryDetail = () => {
 
         {/*Right */}
         <button
-          className="text-5xl bg-white/80 rounded-full p-2"
+          className="text-5xl bg-white/80 rounded-full p-2 cursor-pointer"
           onClick={nextStory}
         >
           <PiArrowCircleRightThin />
