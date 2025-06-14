@@ -83,11 +83,6 @@ const StoryDetail = () => {
     }
 
     setLike(false);
-    // showSuccess({
-    //   title: "Bỏ thích tin",
-    //   content: "Bỏ thích tin thành công",
-    //   button: "Đóng",
-    // });
   };
 
   // Nut chuyen trang

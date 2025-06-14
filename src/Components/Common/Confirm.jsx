@@ -2,7 +2,7 @@ import React from "react";
 import { PiWarningCircleBold } from "react-icons/pi";
 import useConfirmStore from "../../store/confirmStore";
 
-const Confirm = ({title, content, trueButton, handleTrue, handleFalse}) => {
+const Confirm = ({title, content, trueButton, cancelButton = 'Hủy', handleTrue, handleFalse}) => {
   return (
     <div
       className="fixed inset-0 flex items-center justify-center z-50"
@@ -56,7 +56,7 @@ const Confirm = ({title, content, trueButton, handleTrue, handleFalse}) => {
               className="text-(--color-violet) px-4 py-1 rounded-[20px] text-[20px]  border border-(--color-violet) hover:bg-violet-100 transition-all duration-300 cursor-pointer w-fit"
               
             >
-              Hủy
+              {cancelButton}
             </button>
           </div>
         </div>

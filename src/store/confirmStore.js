@@ -6,16 +6,18 @@ const useConfirmStore = create((set) => ({
     title: '',
     content: '',
     trueButton: 'Xác nhận',
+    cancelButton: 'Hủy',
     onConfirm: null,
   },
 
-  showConfirm: ({ title, content, trueButton = 'Xác nhận', onConfirm }) =>
+  showConfirm: ({ title, content, trueButton = 'Xác nhận', cancelButton = 'Hủy', onConfirm }) =>
     set({
       confirmModal: {
         show: true,
         title,
         content,
         trueButton,
+        cancelButton,
         onConfirm,
       },
     }),
