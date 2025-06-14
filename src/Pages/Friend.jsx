@@ -124,7 +124,7 @@ const Friend = () => {
             <div className="">
               <form onSubmit={handleSearchSubmit} className="flex gap-[10px]">
                 <input className="border rounded-[100px] px-[10px] py-[5px]" type="text" placeholder="Tìm kiếm bạn bè"   value={searchUserTerm}  onChange={handleSearchChange} />
-                <button className="bg-(--color-violet) text-white font-bold text-sm px-[14px] py-[8px] rounded-[20px]" type="submit">Tìm</button>
+                <button className="bg-(--color-violet) text-white font-bold text-sm px-[14px] py-[8px] rounded-[20px] cursor-pointer" type="submit">Tìm</button>
               </form>
             </div>
           </div>
