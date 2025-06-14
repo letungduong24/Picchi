@@ -36,16 +36,6 @@ const useFriendStore = create((set, get) => ({
   searchResult: [],
 
   // Hàm cập nhật searchUserTerm
-
-<<<<<<< HEAD
-  // Hàm lọc allUsers theo searchUserTerm
-  filteredUsers: () => {
-  const { users, searchUserTerm } = get();
-  if (!searchUserTerm.trim()) return [];
-  const regex = new RegExp(`\\b${searchUserTerm}`, 'i');
-  return users.filter(user => regex.test(user.name));
-},
-=======
   search: (keyword) => {
     const { users } = get();
     const filteredUsers = users.filter(user => {
@@ -57,7 +47,6 @@ const useFriendStore = create((set, get) => ({
     });
     set({ searchResult: filteredUsers });
   },
->>>>>>> b0f7006c2bd771351b6e728abc198fa769ea9b02
   deleteFriend: (id) => {
     const updatedFriends = get().friends.filter(friend => friend.id !== id);
     set({ friends: updatedFriends });
