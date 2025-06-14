@@ -64,11 +64,7 @@ const StoryDetail = () => {
     }
 
     setLike(true);
-    showSuccess({
-      title: "Thích tin",
-      content: "Thích tin thành công",
-      button: "Đóng",
-    });
+
   };
 
   const handleUnlike = () => {
@@ -83,11 +79,6 @@ const StoryDetail = () => {
     }
 
     setLike(false);
-    showSuccess({
-      title: "Bỏ thích tin",
-      content: "Bỏ thích tin thành công",
-      button: "Đóng",
-    });
   };
 
   // Nut chuyen trang
