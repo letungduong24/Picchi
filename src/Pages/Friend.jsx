@@ -14,30 +14,30 @@ const Friend = () => {
   const {showSuccess} = useSuccessStore();
   const {showError} = useErrorStore();
   const handleChangeTab = (type) => {
-    setTab(type)
-  }
+    setTab(type);
+  };
 
   const handleDeleteFriend = (friend) => {
     deleteFriend(friend);
     showConfirm({
-      title: 'Hủy kết bạn',
-      content: 'Bạn có chắc chắn muốn hủy kết bạn không ?',
-      trueButton: 'Xác nhận',
+      title: "Hủy kết bạn",
+      content: "Bạn có chắc chắn muốn hủy kết bạn không ?",
+      trueButton: "Xác nhận",
       onConfirm: () => {
-        if(friend.isError){
+        if (friend.isError) {
           deleteFriend(friend.id);
-          useConfirmStore.getState().hideConfirm(); 
+          useConfirmStore.getState().hideConfirm();
           showSuccess({
-            title: 'Hủy kết bạn',
-            content: 'Hủy kết bạn thành công',
-            button: 'Đóng'
-        })
+            title: "Hủy kết bạn",
+            content: "Hủy kết bạn thành công",
+            button: "Đóng",
+          });
         } else {
           showError({
-            title: 'Hủy kết bạn',
-            content: 'Người dùng này không tồn tại.',
-            button: 'Đóng'
-          })
+            title: "Hủy kết bạn",
+            content: "Người dùng này không tồn tại.",
+            button: "Đóng",
+          });
         }
       },
     });
@@ -118,8 +118,26 @@ const Friend = () => {
           {/* topbar */}
           <div className="p-[20px] flex justify-between items-center">
             <div className="font-bold text-(--color-violet) flex gap-[20px]">
-              <button onClick={() => handleChangeTab('friend')} className={tab === 'friend' ? 'border-b-2 border-(--color-violet)' : 'cursor-pointer'}>Bạn bè</button>
-              <button onClick={() => handleChangeTab('request')} className={tab === 'request' ? 'border-b-2 border-(--color-violet)' : 'cursor-pointer'}>Lời mời kết bạn</button>
+              <button
+                onClick={() => handleChangeTab("friend")}
+                className={
+                  tab === "friend"
+                    ? "border-b-2 border-(--color-violet)"
+                    : "cursor-pointer"
+                }
+              >
+                Bạn bè
+              </button>
+              <button
+                onClick={() => handleChangeTab("request")}
+                className={
+                  tab === "request"
+                    ? "border-b-2 border-(--color-violet)"
+                    : "cursor-pointer"
+                }
+              >
+                Lời mời kết bạn
+              </button>
             </div>
             <div className="">
               <form onSubmit={handleSearchSubmit} className="flex gap-[10px]">
