@@ -86,22 +86,8 @@ const Friend = () => {
 
   const handleSearchSubmit = (e) => {
   e.preventDefault();
-  if (searchUserTerm.trim() === "") {
-    showError({
-      title: 'Tìm kiếm',
-      content: 'Tìm kiếm thất bại vui lòng thử lại sau.',
-      button: 'Đóng'
-    });
-    return;
-  }
   const users = filteredUsers();
-  if (users.length === 0) {
-    showError({
-      title: 'Tìm kiếm',
-      content: 'Tìm kiếm thất bại vui lòng thử lại sau.',
-      button: 'Đóng'
-    });
-  } else if (users.every(user => user.isError)) {
+  if (users.every(user => user.isError)) {
     setTab('search');
   } else {
     showError({

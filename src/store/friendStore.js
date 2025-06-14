@@ -41,10 +41,9 @@ const useFriendStore = create((set, get) => ({
   // Hàm lọc allUsers theo searchUserTerm
   filteredUsers: () => {
   const { users, searchUserTerm } = get();
-  if (!searchUserTerm) return users;
-  return users.filter(user =>
-    user.name.toLowerCase().includes(searchUserTerm.toLowerCase())
-  );
+  if (!searchUserTerm.trim()) return [];
+  const regex = new RegExp(`\\b${searchUserTerm}`, 'i');
+  return users.filter(user => regex.test(user.name));
 },
   deleteFriend: (id) => {
     const updatedFriends = get().friends.filter(friend => friend.id !== id);
