@@ -35,6 +35,7 @@ const App = () => {
             title={confirmModal.title}
             content={confirmModal.content}
             trueButton={confirmModal.trueButton}
+            cancelButton={confirmModal.cancelButton}
             handleTrue={() => {
               confirmModal.onConfirm?.();
               hideConfirm();
