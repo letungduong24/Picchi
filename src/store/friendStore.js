@@ -32,12 +32,12 @@ const useFriendStore = create((set, get) => ({
     { id: 7, name: 'Hải', avatar: avt, isError: true },
     { id: 8, name: 'Tú', avatar: avt, isError: false},
   ],
-   // State tìm kiếm riêng cho allUsers
-  searchUserTerm: '',
+  
+  searchResult: [],
 
   // Hàm cập nhật searchUserTerm
-  setSearchUserTerm: (term) => set({ searchUserTerm: term }),
 
+<<<<<<< HEAD
   // Hàm lọc allUsers theo searchUserTerm
   filteredUsers: () => {
   const { users, searchUserTerm } = get();
@@ -45,6 +45,19 @@ const useFriendStore = create((set, get) => ({
   const regex = new RegExp(`\\b${searchUserTerm}`, 'i');
   return users.filter(user => regex.test(user.name));
 },
+=======
+  search: (keyword) => {
+    const { users } = get();
+    const filteredUsers = users.filter(user => {
+      const nameWords = user.name.toLowerCase().split(' ');
+      const searchWords = keyword.toLowerCase().split(' ');
+      return searchWords.every(searchWord => 
+        nameWords.some(nameWord => nameWord === searchWord)
+      );
+    });
+    set({ searchResult: filteredUsers });
+  },
+>>>>>>> b0f7006c2bd771351b6e728abc198fa769ea9b02
   deleteFriend: (id) => {
     const updatedFriends = get().friends.filter(friend => friend.id !== id);
     set({ friends: updatedFriends });

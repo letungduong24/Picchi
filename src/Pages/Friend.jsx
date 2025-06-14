@@ -8,11 +8,12 @@ import useErrorStore from "../store/errorStore";
 import SearchResult from '../Components/Friend/SearchResult';
 
 const Friend = () => {
-  const {friends, requests, deleteFriend, deleteRequest, filteredUsers, setSearchUserTerm, searchUserTerm} = useFriendStore();
+  const {friends, requests, deleteFriend, search, deleteRequest, searchResult} = useFriendStore();
   const [tab, setTab] = useState('friend')
   const {showConfirm} = useConfirmStore()
   const {showSuccess} = useSuccessStore();
   const {showError} = useErrorStore();
+
   const handleChangeTab = (type) => {
     setTab(type);
   };
@@ -81,22 +82,39 @@ const Friend = () => {
   }
 
   const handleSearchChange = (e) => {
-  setSearchUserTerm(e.target.value);
+    if (e.target.value.toLowerCase() === 'lỗi') {
+      showError({
+        title: 'Tìm kiếm',
+        content: 'Tìm kiếm thất bại, vui lòng thử lại sau.',
+        button: 'Đóng'
+      });
+      return;
+    }
+    search(e.target.value)
+    if(e.target.value.trim() === '') {
+      handleChangeTab('friend')
+    } else if(tab !== 'search'){
+      handleChangeTab('search')
+    }
   }
 
-  const handleSearchSubmit = (e) => {
-  e.preventDefault();
-  const users = filteredUsers();
-  if (users.every(user => user.isError)) {
-    setTab('search');
-  } else {
-    showError({
-      title: 'Tìm kiếm',
-      content: 'Tìm kiếm thất bại vui lòng thử lại sau.',
-      button: 'Đóng'
-    });
+  const handleSearch = (value) => {
+    if (value.toLowerCase() === 'lỗi') {
+      showError({
+        title: 'Tìm kiếm',
+        content: 'Tìm kiếm thất bại, vui lòng thử lại sau.',
+        button: 'Đóng'
+      });
+      return;
+    }
+    search(value)
+    if(value.trim() === '') {
+      handleChangeTab('friend')
+    } else if(tab !== 'search'){
+      handleChangeTab('search')
+    }
   }
-};
+
   return (
     <div>
       <div className="p-[20px] bg-(--color-gray) flex-1 flex flex-col gap-3">
@@ -126,9 +144,21 @@ const Friend = () => {
               </button>
             </div>
             <div className="">
-              <form onSubmit={handleSearchSubmit} className="flex gap-[10px]">
-                <input className="border rounded-[100px] px-[10px] py-[5px]" type="text" placeholder="Tìm kiếm bạn bè"   value={searchUserTerm}  onChange={handleSearchChange} />
-                <button className="bg-(--color-violet) text-white font-bold text-sm px-[14px] py-[8px] rounded-[20px] cursor-pointer" type="submit">Tìm</button>
+              <form onSubmit={(e) => e.preventDefault()} className="flex gap-[10px]">
+                <input 
+                  className="border rounded-[100px] px-[10px] py-[5px]" 
+                  type="text" 
+                  placeholder="Tìm kiếm bạn bè"  
+                  onChange={(e) => handleSearchChange(e)}
+                  id="searchInput"
+                />
+                <button 
+                  className="bg-(--color-violet) text-white font-bold text-sm px-[14px] py-[8px] rounded-[20px] cursor-pointer" 
+                  type="button"
+                  onClick={() => handleSearch(document.getElementById('searchInput').value)}
+                >
+                  Tìm
+                </button>
               </form>
             </div>
           </div>
@@ -140,9 +170,17 @@ const Friend = () => {
             {tab === 'request' && requests.map((request) => (
               <RequestCard handleDeleteAccept={() => handleDeleteAccept(request)} handleDeleteDecline={() => handleDeleteDecline(request)} avatar={request.avatar} name={request.name} />
             ))}
-              {tab === 'search' &&  filteredUsers().map((user) => (
-              <SearchResult key={user.id} id={user.id} avatar={user.avatar} name={user.name} />
-            ))}
+            {tab === 'search' && (
+              searchResult.length > 0 ? (
+                searchResult.map((user) => (
+                  <SearchResult key={user.id} id={user.id} avatar={user.avatar} name={user.name} />
+                ))
+              ) : (
+                <div className="col-span-2 text-center text-gray-500">
+                  Không có người dùng nào
+                </div>
+              )
+            )}
           </div>
         </div>
       </div>
