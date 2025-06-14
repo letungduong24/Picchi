@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { MdFilterListAlt } from "react-icons/md";
 import SmallStory from "../Components/Story/SmallStory";
 import useFeedStore from '../store/feedStore';
+import useErrorStore from '../store/errorStore';
+import useSuccessStore from '../store/successStore';
+import useConfirmStore from '../store/confirmStore';
 import { useNavigate } from "react-router-dom";
 import Default from '../assets/default.png'
 
@@ -9,7 +12,12 @@ const StoryCreate = () => {
   const [caption, setCaption] = useState('');
   const [previewCaption, setPreviewCaption] = useState('Chưa có mô tả')
   const [image, setImage] = useState(Default)
+  const [isImageUploaded, setIsImageUploaded] = useState(false)
+  const [isFirstAttempt, setIsFirstAttempt] = useState(true)
   const navigate = useNavigate()
+  const { showError } = useErrorStore()
+  const { showSuccess } = useSuccessStore()
+  const { showConfirm } = useConfirmStore()
 
   const handleOpenStory = (story) => {
     setDetailStory(story)
@@ -22,29 +30,106 @@ const StoryCreate = () => {
     setPreviewCaption(value.length === 0 ? 'Chưa có mô tả' : value);
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const validFormats = ['image/png', 'image/jpeg', 'image/jpg'];
+    if (!validFormats.includes(file.type)) {
+      showError({
+        title: 'Đăng tin',
+        content: 'Định dạng ảnh không hợp lệ. Vui lòng chọn ảnh có định dạng jpg/jpeg/png.'
+      });
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result);
+      setIsImageUploaded(true);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!isImageUploaded) return;
+
+    if (isFirstAttempt) {
+      showError({
+        title: 'Đăng tin',
+        content: 'Lỗi khi đăng tin, vui lòng thử lại sau.'
+      });
+      setIsFirstAttempt(false);
+      return;
+    }
+
+    // Show success message and navigate
+    showSuccess({
+      title: 'Đăng tin',
+      content: 'Đăng tin thành công!'
+    });
+    navigate('/');
+  };
+
+  const handleCancel = () => {
+    showConfirm({
+      title: 'Hủy đăng tin',
+      content: 'Bạn có chắc chắn muốn bỏ tin này không? Hệ thống sẽ không lưu tin của bạn.',
+      trueButton: 'Hủy',
+      cancelButton: 'Tiếp tục chỉnh sửa',
+      onConfirm: () => {
+        setCaption('');
+        setPreviewCaption('Chưa có mô tả');
+        setImage(Default);
+        setIsImageUploaded(false);
+        setIsFirstAttempt(true);
+      },
+    });
+  };
 
   return (
     <div className="p-[20px] bg-(--color-gray) flex-1 flex flex-col gap-3 items-center">
       <div className="topbar flex justify-center items-center">
         <p className='font-bold text-2xl text-(--color-violet)'>ĐĂNG TIN MỚI</p>
       </div>
-      <div className="p-[30px] w-fit bg-white rounded-[20px] flex-1 flex gap-[30px]">
+      <div className="p-[30px] w-full justify-center bg-white rounded-[20px] flex-1 flex gap-[30px]">
           <div className="h-full aspect-square flex flex-col">
             <p className="flex justify-center text-xl font-bold">Soạn tin</p>
             <div className="flex-1 flex items-center justify-center">
-              <form action="" className="border-1 h-full rounded-[20px] w-full p-5 items-center justify-center flex flex-col gap-4">
+              <form onSubmit={handleSubmit} className="border-1 h-full rounded-[20px] w-full p-5 items-center justify-center flex flex-col gap-4">
                 <div className="space-y-2 w-full">
                   <p className="font-bold">Chọn ảnh:</p>
-                  <label className="cursor-pointer w-full shadow-lg p-3 rounded-[20px] flex justify-center border-1" htmlFor="image-upload">Tải ảnh lên</label>
-                  <input hidden type="file" name="" id="image-upload" />
+                  <label className="cursor-pointer w-full shadow-lg p-3 rounded-[20px] flex justify-center border-1 hover:bg-violet-100 transition-all duration-300" htmlFor="image-upload">Tải ảnh lên</label>
+                  <input 
+                    hidden 
+                    type="file" 
+                    name="" 
+                    id="image-upload" 
+                    accept=".png,.jpg,.jpeg"
+                    onChange={handleImageUpload}
+                  />
                 </div>
                 <div className="space-y-2 w-full">
                   <p className="font-bold">Nhập mô tả:</p>
                   <input value={caption} onChange={(e) => handleTypeCaption(e)} type="text" placeholder="Nhập mô tả tại đây" className="rounded-[20px] border p-3 w-full"/>
                 </div>
                 <div className="grid grid-cols-2 w-full gap-1">
-                  <button className="bg-(--color-violet) text-white font-bold p-3 rounded-[20px] cursor-pointer hover:bg-[#58467e] duration-300 transition-all">Đăng tin</button>
-                  <button className="bg-(--color-gray) border font-bold p-3 rounded-[20px] hover:bg-violet-100 transition-all duration-300 cursor-pointer">Hủy</button>
+                  <button 
+                    type="submit"
+                    className={`bg-(--color-violet) text-white font-bold p-3 rounded-[20px] cursor-pointer hover:bg-[#58467e] duration-300 transition-all ${!isImageUploaded ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    disabled={!isImageUploaded}
+                  >
+                    Đăng tin
+                  </button>
+                  <button 
+                    type="button" 
+                    onClick={handleCancel} 
+                    className={`bg-(--color-gray) border font-bold p-3 rounded-[20px] hover:bg-violet-100 transition-all duration-300 cursor-pointer ${!isImageUploaded && caption.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    disabled={!isImageUploaded && caption.length === 0}
+                  >
+                    Hủy
+                  </button>
                 </div>
               </form>
             </div>
