@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Default from "../assets/default.png";
 import { FaRegHeart } from "react-icons/fa";
 import { PiChatCircleDots } from "react-icons/pi";
@@ -10,20 +10,60 @@ import useFeedStore from "../store/feedStore";
 import useErrorStore from "../store/errorStore";
 import useSuccessStore from "../store/successStore";
 import { FaHeart } from "react-icons/fa";
+import { PiArrowCircleLeftThin } from "react-icons/pi";
+import { PiArrowCircleRightThin } from "react-icons/pi";
 
 const StoryDetail = () => {
   const navigate = useNavigate();
   const [visibleState, setVisibleState] = useState("bar");
-  const { detailStory } = useFeedStore();
-  const {showError, hideError} = useErrorStore();
-  const [like, setLike] = useState(false)
-  const { showSuccess, hideSuccess } = useSuccessStore();
+  const { detailStory, stories = [], setDetailStory } = useFeedStore();
+  const { showError } = useErrorStore();
+  const [like, setLike] = useState(false);
+  const { showSuccess } = useSuccessStore();
+
+  // Tìm index hiện tại dựa trên detailStory
+  const [currentIndex, setCurrentIndex] = useState(() => {
+    if (detailStory && stories.length > 0) {
+      const index = stories.findIndex((story) => story.id === detailStory.id);
+      return index >= 0 ? index : 0;
+    }
+    return 0;
+  });
+
   const handleSetType = (type) => {
     setVisibleState(type);
   };
 
+  useEffect(() => {
+    if (detailStory && detailStory.isError) {
+      showError({
+        title: "Lỗi tin",
+        content: "Tin không tồn tại!",
+        button: "Đóng",
+        onClose: () => navigate("/"),
+      });
+    } else if (!detailStory) {
+      showError({
+        title: "Lỗi tin",
+        content: "Tin không tồn tại!",
+        button: "Đóng",
+        onClose: () => navigate("/"),
+      });
+    }
+  }, [detailStory]);
+
   const handleLike = () => {
-    setLike(!like);
+    if (detailStory?.likeOrChatError) {
+      showError({
+        title: "Lỗi tin",
+        content: "Tin không tồn tại!",
+        button: "Đóng",
+        onClose: () => navigate("/"),
+      });
+      return;
+    }
+
+    setLike(true);
     showSuccess({
       title: "Thích tin",
       content: "Thích tin thành công",
@@ -31,23 +71,60 @@ const StoryDetail = () => {
     });
   };
 
-  useEffect(() => {
-    if(!detailStory){
+  const handleUnlike = () => {
+    if (detailStory?.likeOrChatError) {
       showError({
-            title: 'Xem tin',
-            content: 'Tin không tồn tại!',
-            button: 'Đóng',
-        })
-      navigate('/')
+        title: "Lỗi tin",
+        content: "Tin không tồn tại!",
+        button: "Đóng",
+        onClose: () => navigate("/"),
+      });
+      return;
     }
-  }, [detailStory])
+
+    setLike(false);
+    showSuccess({
+      title: "Bỏ thích tin",
+      content: "Bỏ thích tin thành công",
+      button: "Đóng",
+    });
+  };
+
+  // Nut chuyen trang
+  const nextStory = () => {
+    if (stories.length === 0) return;
+    const nextIndex = currentIndex + 1;
+    const newIndex = nextIndex >= stories.length ? 0 : nextIndex;
+    setCurrentIndex(newIndex);
+    setDetailStory(stories[newIndex]);
+    setLike(false);
+    setVisibleState("bar");
+  };
+
+  const prevStory = () => {
+    if (stories.length === 0) return;
+    const prevIndex = currentIndex - 1;
+    const newIndex = prevIndex < 0 ? stories.length - 1 : prevIndex;
+    setCurrentIndex(newIndex);
+    setDetailStory(stories[newIndex]);
+    setLike(false);
+    setVisibleState("bar");
+  };
 
   return (
-    <div className=" bg-(--color-gray) flex-1 flex flex-col gap-3">
-      <div className="bg-(--color-gray) min-h-[500px] flex-1 p-[30px] rounded-[15px] flex justify-center items-center gap-0">
+    <div className=" bg-(--color-gray) flex-1 flex flex-col gap-3 p-[20px]">
+      <div className="bg-white min-h-[500px] flex-1 p-[30px] rounded-[25px] flex justify-center items-center gap-4">
+        {/* left */}
+        <button
+          className=" text-5xl bg-white/80 rounded-full p-2 cursor-pointer"
+          onClick={prevStory}
+        >
+          <PiArrowCircleLeftThin />
+        </button>
+
         {/* Story */}
         <div
-          className="flex flex-col items-start justify-between gap-[10px] p-4 w-full max-w-[450px] aspect-[3/4] rounded-[20px] shadow-md border border-gray-200 bg-cover bg-center text-white"
+          className="flex flex-col items-start justify-between gap-[10px] p-4 h-full aspect-[3/4]  rounded-[20px] shadow-md border border-gray-200 bg-cover bg-center text-white"
           style={{
             backgroundImage: `url(${
               detailStory ? detailStory.storyImg : Default
@@ -85,13 +162,21 @@ const StoryDetail = () => {
                 {detailStory ? (
                   <>
                     <div className="bg-white h-full aspect-square flex justify-center items-center rounded-[20px]">
-                      <button
+                      {!like ? (
+                        <button
                         className="text-red-500 hover:text-red-600 text-3xl cursor-pointer"
-                        // onClick={() => setLike(!like)}
                         onClick={handleLike}
                       >
-                        {like ? <FaHeart /> : <FaRegHeart />}
+                        <FaRegHeart />
                       </button>
+                      ) : (
+                        <button
+                        className="text-red-500 hover:text-red-600 text-3xl cursor-pointer"
+                        onClick={handleUnlike}
+                      >
+                        <FaHeart />
+                      </button>
+                      )}
                     </div>
                     <div className="bg-white h-full aspect-square flex justify-center items-center rounded-[20px]">
                       <button
@@ -107,14 +192,23 @@ const StoryDetail = () => {
                 ) : (
                   ""
                 )}
-
-                {/* Action buttons */}
               </div>
             ) : (
-              <ChatStory handleClose={() => handleSetType("bar")} />
+              <ChatStory
+                handleClose={() => handleSetType("bar")}
+                detailStory={detailStory}
+              />
             )}
           </div>
         </div>
+
+        {/*Right */}
+        <button
+          className="text-5xl bg-white/80 rounded-full p-2 cursor-pointer"
+          onClick={nextStory}
+        >
+          <PiArrowCircleRightThin />
+        </button>
       </div>
     </div>
   );
