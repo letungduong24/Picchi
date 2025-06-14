@@ -82,8 +82,33 @@ const Friend = () => {
   }
 
   const handleSearchChange = (e) => {
+    if (e.target.value.toLowerCase() === 'lỗi') {
+      showError({
+        title: 'Tìm kiếm',
+        content: 'Tìm kiếm thất bại, vui lòng thử lại sau.',
+        button: 'Đóng'
+      });
+      return;
+    }
     search(e.target.value)
     if(e.target.value.trim() === '') {
+      handleChangeTab('friend')
+    } else if(tab !== 'search'){
+      handleChangeTab('search')
+    }
+  }
+
+  const handleSearch = (value) => {
+    if (value.toLowerCase() === 'lỗi') {
+      showError({
+        title: 'Tìm kiếm',
+        content: 'Tìm kiếm thất bại, vui lòng thử lại sau.',
+        button: 'Đóng'
+      });
+      return;
+    }
+    search(value)
+    if(value.trim() === '') {
       handleChangeTab('friend')
     } else if(tab !== 'search'){
       handleChangeTab('search')
@@ -120,8 +145,20 @@ const Friend = () => {
             </div>
             <div className="">
               <form onSubmit={(e) => e.preventDefault()} className="flex gap-[10px]">
-                <input className="border rounded-[100px] px-[10px] py-[5px]" type="text" placeholder="Tìm kiếm bạn bè"  onChange={handleSearchChange} />
-                <button className="bg-(--color-violet) text-white font-bold text-sm px-[14px] py-[8px] rounded-[20px] cursor-pointer" type="button">Tìm</button>
+                <input 
+                  className="border rounded-[100px] px-[10px] py-[5px]" 
+                  type="text" 
+                  placeholder="Tìm kiếm bạn bè"  
+                  onChange={(e) => handleSearchChange(e)}
+                  id="searchInput"
+                />
+                <button 
+                  className="bg-(--color-violet) text-white font-bold text-sm px-[14px] py-[8px] rounded-[20px] cursor-pointer" 
+                  type="button"
+                  onClick={() => handleSearch(document.getElementById('searchInput').value)}
+                >
+                  Tìm
+                </button>
               </form>
             </div>
           </div>
@@ -133,9 +170,17 @@ const Friend = () => {
             {tab === 'request' && requests.map((request) => (
               <RequestCard handleDeleteAccept={() => handleDeleteAccept(request)} handleDeleteDecline={() => handleDeleteDecline(request)} avatar={request.avatar} name={request.name} />
             ))}
-              {tab === 'search' &&  searchResult.map((user) => (
-              <SearchResult key={user.id} id={user.id} avatar={user.avatar} name={user.name} />
-            ))}
+            {tab === 'search' && (
+              searchResult.length > 0 ? (
+                searchResult.map((user) => (
+                  <SearchResult key={user.id} id={user.id} avatar={user.avatar} name={user.name} />
+                ))
+              ) : (
+                <div className="col-span-2 text-center text-gray-500">
+                  Không có người dùng nào
+                </div>
+              )
+            )}
           </div>
         </div>
       </div>
