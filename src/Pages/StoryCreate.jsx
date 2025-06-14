@@ -19,10 +19,6 @@ const StoryCreate = () => {
   const { showSuccess } = useSuccessStore()
   const { showConfirm } = useConfirmStore()
 
-  const handleOpenStory = (story) => {
-    setDetailStory(story)
-    navigate('/story');
-  }
 
   const handleTypeCaption = (e) => {
     const value = e.target.value;
