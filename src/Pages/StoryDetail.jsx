@@ -64,7 +64,11 @@ const StoryDetail = () => {
     }
 
     setLike(true);
-
+    // showSuccess({
+    //   title: "Thích tin",
+    //   content: "Thích tin thành công",
+    //   button: "Đóng",
+    // });
   };
 
   const handleUnlike = () => {

@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { MdFilterListAlt } from "react-icons/md";
 import SmallStory from "../Components/Story/SmallStory";
 import useFeedStore from '../store/feedStore';
+import useErrorStore from '../store/errorStore';
+import useSuccessStore from '../store/successStore';
+import useConfirmStore from '../store/confirmStore';
 import { useNavigate } from "react-router-dom";
 import Default from '../assets/default.png'
 
@@ -15,16 +18,70 @@ const StoryCreate = () => {
   const { showError } = useErrorStore()
   const { showSuccess } = useSuccessStore()
   const { showConfirm } = useConfirmStore()
-  
-  const handleOpenStory = (story) => {
-    setDetailStory(story)
-    navigate('/story');
-  }
+
 
   const handleTypeCaption = (e) => {
     const value = e.target.value;
     setCaption(value);
     setPreviewCaption(value.length === 0 ? 'Chưa có mô tả' : value);
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const validFormats = ['image/png', 'image/jpeg', 'image/jpg'];
+    if (!validFormats.includes(file.type)) {
+      showError({
+        title: 'Đăng tin',
+        content: 'Định dạng ảnh không hợp lệ. Vui lòng chọn ảnh có định dạng jpg/jpeg/png.'
+      });
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result);
+      setIsImageUploaded(true);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!isImageUploaded) return;
+
+    if (isFirstAttempt) {
+      showError({
+        title: 'Đăng tin',
+        content: 'Lỗi khi đăng tin, vui lòng thử lại sau.'
+      });
+      setIsFirstAttempt(false);
+      return;
+    }
+
+    // Show success message and navigate
+    showSuccess({
+      title: 'Đăng tin',
+      content: 'Đăng tin thành công!'
+    });
+    navigate('/');
+  };
+
+  const handleCancel = () => {
+    showConfirm({
+      title: 'Hủy đăng tin',
+      content: 'Bạn có chắc chắn muốn bỏ tin này không? Hệ thống sẽ không lưu tin của bạn.',
+      trueButton: 'Hủy',
+      cancelButton: 'Tiếp tục chỉnh sửa',
+      onConfirm: () => {
+        setCaption('');
+        setPreviewCaption('Chưa có mô tả');
+        setImage(Default);
+        setIsImageUploaded(false);
+        setIsFirstAttempt(true);
+      },
+    });
   };
 
   return (

@@ -53,6 +53,7 @@ const GridComposer = () => {
 
   const isFull = images.every(img => img);
   const isImageUploaded = isFull;
+  const hasAnyImage = images.some(img => img);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -107,6 +108,10 @@ const GridComposer = () => {
     });
   };
 
+  const handlePost = () => {
+    navigate('/create-story');
+  };
+
   if (isGridCreated) {
     return (
       <GridWrap>
@@ -131,7 +136,7 @@ const GridComposer = () => {
             <button type="button" className="bg-(--color-violet) text-white font-bold p-[18px] rounded-[20px] cursor-pointer hover:bg-[#58467e] duration-300 transition-all" onClick={handleDownload}>
               Tải lưới ảnh
             </button>
-            <button type="button" className="bg-(--color-violet) text-white font-bold p-[18px] rounded-[20px] cursor-pointer hover:bg-[#58467e] duration-300 transition-all">
+            <button type="button" className="bg-(--color-violet) text-white font-bold p-[18px] rounded-[20px] cursor-pointer hover:bg-[#58467e] duration-300 transition-all" onClick={handlePost}>
               Đăng tin
             </button>
           </div>
@@ -158,7 +163,7 @@ const GridComposer = () => {
             ))}
           </div>
           <div className="grid grid-cols-2 gap-[10px] mt-[10px]">
-            <button type="button" onClick={handleCancel} className="bg-white border font-bold p-[18px] rounded-[20px] hover:bg-violet-100 transition-all duration-300 cursor-pointer">
+            <button type="button" onClick={handleCancel} className={`bg-white border font-bold p-[18px] rounded-[20px] hover:bg-violet-100 transition-all duration-300 cursor-pointer ${hasAnyImage ? '' : 'opacity-40 pointer-events-none'}`} disabled={!hasAnyImage}>
               Hủy
             </button>
             <button

@@ -1,4 +1,5 @@
 import React from 'react';
+import { MdCancel } from 'react-icons/md';
 
 const GridImage = ({ image, defaultImg, onPickImage, onRemoveImage, inputRef, onFileChange }) => (
   <div className="w-full aspect-[3/4] bg-[#D9D9D9] rounded-[5px] flex items-center justify-center relative overflow-hidden group">
@@ -17,14 +18,11 @@ const GridImage = ({ image, defaultImg, onPickImage, onRemoveImage, inputRef, on
       <>
         <img src={image} alt="" className="w-full h-full object-cover" />
         <button
-          className="absolute top-1.5 right-1.5 w-6 h-6 flex items-center justify-center rounded-full bg-white z-10 transition hover:bg-gray-100 cursor-pointer"
+          className="cursor-pointer absolute top-0 right-0 text-white hover:text-gray-50/80 text-3xl"
           onClick={onRemoveImage}
           type="button"
         >
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="4" y1="4" x2="14" y2="14" stroke="#B0B0B0" strokeWidth="2.2" strokeLinecap="round" />
-            <line x1="14" y1="4" x2="4" y2="14" stroke="#B0B0B0" strokeWidth="2.2" strokeLinecap="round" />
-          </svg>
+          <MdCancel />
         </button>
       </>
     ) : (
