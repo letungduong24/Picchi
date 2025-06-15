@@ -1,9 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import GridComposer from '../Components/Grid/GridComposer';
 
 const Grid = () => {
-  return (
-    <div>Grid</div>
-  )
-}
-
-export default Grid
+  return <GridComposer />;
+};
+export default Grid;

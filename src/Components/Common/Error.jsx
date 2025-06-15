@@ -41,10 +41,10 @@ const Error = ({title, content, button, handleClose}) => {
           </p>
         </div>
 
-        <div className="w-full flex justify-end">
+        <div className="w-full flex justify-center">
           <button
             onClick={handleClose}
-            className="text-(--color-violet) px-4 py-1 rounded-[20px] text-[20px] font-medium border border-(--color-violet) hover:bg-violet-100 transition cursor-pointer"
+            className="text-black px-4 py-1 rounded-[20px] text-[20px] font-medium border border-(--color-violet) hover:bg-violet-100 transition cursor-pointer"
           >
             {button}
           </button>
