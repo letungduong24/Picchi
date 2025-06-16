@@ -48,7 +48,12 @@ const App = () => {
             title={successModal.title}
             content={successModal.content}
             button={successModal.button}
-            handleClose={hideSuccess}
+            handleClose={() => {
+              hideSuccess();
+              if (successModal.onClose) {
+                successModal.onClose();
+              }
+            }}
           />
         )}
         {errorModal.show && (

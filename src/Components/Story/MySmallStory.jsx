@@ -10,7 +10,7 @@ const MySmallStory = ({storyImg, time, onDelete, isError }) => {
 
     <button
       onClick={onDelete}
-      className="absolute top-3 right-3 z-10 text-xs font-bold text-(--color-violet) bg-white px-2 py-1 rounded-[20px] shadow-md hover:shadow-lg hover:bg-gray-100 transition-all duration-200"
+      className="absolute top-3 right-3 z-10 text-xs font-bold text-(--color-violet) bg-white px-2 py-1 rounded-[20px] shadow-md hover:shadow-lg hover:bg-gray-100 transition-all duration-300"
       style={{ cursor: "pointer" }}
     >
       Xóa tin

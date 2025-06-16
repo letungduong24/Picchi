@@ -5,14 +5,16 @@ import useFeedStore from '../store/feedStore';
 import useErrorStore from '../store/errorStore';
 import useSuccessStore from '../store/successStore';
 import useConfirmStore from '../store/confirmStore';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Default from '../assets/default.png'
 
 const StoryCreate = () => {
+  const location = useLocation();
+  const initImage = location.state?.initImage;
   const [caption, setCaption] = useState('');
   const [previewCaption, setPreviewCaption] = useState('Chưa có mô tả')
-  const [image, setImage] = useState(Default)
-  const [isImageUploaded, setIsImageUploaded] = useState(false)
+  const [image, setImage] = useState(initImage || Default)
+  const [isImageUploaded, setIsImageUploaded] = useState(!!initImage)
   const [isFirstAttempt, setIsFirstAttempt] = useState(true)
   const navigate = useNavigate()
   const { showError } = useErrorStore()
@@ -63,9 +65,10 @@ const StoryCreate = () => {
     // Show success message and navigate
     showSuccess({
       title: 'Đăng tin',
-      content: 'Đăng tin thành công!'
+      content: 'Đăng tin thành công!',
+      button: 'Đóng',
+      onClose: () => navigate('/')
     });
-    navigate('/');
   };
 
   const handleCancel = () => {
@@ -96,7 +99,7 @@ const StoryCreate = () => {
               <form onSubmit={handleSubmit} className="border-1 h-full rounded-[20px] w-full p-5 items-center justify-center flex flex-col gap-4">
                 <div className="space-y-2 w-full">
                   <p className="font-bold">Chọn ảnh:</p>
-                  <label className="cursor-pointer w-full shadow-lg p-3 rounded-[20px] flex justify-center border-1 hover:bg-violet-100 transition-all duration-300" htmlFor="image-upload">Tải ảnh lên</label>
+                  <label className="cursor-pointer w-full shadow-lg p-3 rounded-[20px] flex justify-center border-1 hover:bg-gray-100 transition-all duration-300" htmlFor="image-upload">Tải ảnh lên</label>
                   <input 
                     hidden 
                     type="file" 
@@ -113,7 +116,7 @@ const StoryCreate = () => {
                 <div className="grid grid-cols-2 w-full gap-1">
                   <button 
                     type="submit"
-                    className={`bg-(--color-violet) text-white font-bold p-3 rounded-[20px] cursor-pointer hover:bg-[#58467e] duration-300 transition-all ${!isImageUploaded ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`bg-(--color-violet) shadow text-white font-bold p-3 rounded-[20px] cursor-pointer hover:bg-[#58467e] duration-300 transition-all ${!isImageUploaded ? 'opacity-50 cursor-not-allowed' : ''}`}
                     disabled={!isImageUploaded}
                   >
                     Đăng tin
@@ -121,7 +124,7 @@ const StoryCreate = () => {
                   <button 
                     type="button" 
                     onClick={handleCancel} 
-                    className={`bg-(--color-gray) border font-bold p-3 rounded-[20px] hover:bg-violet-100 transition-all duration-300 cursor-pointer ${!isImageUploaded && caption.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`shadow-lg border font-bold p-3 rounded-[20px] hover:bg-gray-100 transition-all duration-300 cursor-pointer ${!isImageUploaded && caption.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                     disabled={!isImageUploaded && caption.length === 0}
                   >
                     Hủy

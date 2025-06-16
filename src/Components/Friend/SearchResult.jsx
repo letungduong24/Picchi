@@ -1,15 +1,10 @@
-import React from 'react'
-import useSuccessStore from '../../store/successStore'
+import React, { useState } from 'react'
 
 const SearchResult = ({id, avatar, name}) => {
-  const { showSuccess } = useSuccessStore();
+  const [isRequestSent, setIsRequestSent] = useState(false);
 
   const handleSendRequest = () => {
-    showSuccess({
-      title: 'Gửi lời mời kết bạn',
-      content: 'Gửi lời mời kết bạn thành công',
-      button: 'Đóng'
-    });
+    setIsRequestSent(!isRequestSent);
   };
 
   return (
@@ -23,9 +18,9 @@ const SearchResult = ({id, avatar, name}) => {
       <div className="shrink-0">
         <button 
           onClick={handleSendRequest}
-          className='bg-white px-3 py-1.5 rounded-[20px] font-bold cursor-pointer'
+          className="px-3 py-1.5 rounded-[20px] font-bold cursor-pointer bg-white shadow hover:bg-gray-100 transition-all duration-300"
         >
-          Thêm bạn bè
+          {isRequestSent ? 'Hủy lời mời' : 'Thêm bạn bè'}
         </button>
       </div>
     </div>

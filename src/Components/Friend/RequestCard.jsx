@@ -10,10 +10,10 @@ const RequestCard = ({id, avatar, name, handleDeleteAccept, handleDeleteDecline}
         <div className="font-bold text-xl">{name}</div>
       </div>
       <div className="shrink-0 flex gap-[10px]">
-        <button onClick={handleDeleteAccept} className="bg-(--color-violet) text-white px-3 py-1.5 rounded-[20px] font-bold cursor-pointer">
+        <button onClick={handleDeleteAccept} className="bg-(--color-violet) text-white px-3 py-1.5 rounded-[20px] font-bold cursor-pointer shadow hover:bg-(--color-lviolet) durati0n-300 transition-all">
           Đồng ý
         </button>
-        <button onClick={handleDeleteDecline} className="bg-white px-3 py-1.5 rounded-[20px] font-bold cursor-pointer">
+        <button onClick={handleDeleteDecline} className="bg-white px-3 py-1.5 rounded-[20px] font-bold cursor-pointer hover:bg-gray-100 shadow durati0n-300 transition-all">
           Từ chối
         </button>
       </div>

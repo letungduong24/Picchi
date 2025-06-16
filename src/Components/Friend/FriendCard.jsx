@@ -10,7 +10,7 @@ const FriendCard = ({id, name, avatar, handleDelete}) => {
         <div className="font-bold text-xl">{name}</div>
       </div>
       <div className="shrink-0">
-        <button onClick={handleDelete} className='bg-white px-3 py-1.5 rounded-[20px] font-bold cursor-pointer'>Hủy kết bạn</button>
+        <button onClick={handleDelete} className='bg-white px-3 py-1.5 rounded-[20px] font-bold cursor-pointer hover:bg-gray-100 shadow durati0n-300 transition-all'>Hủy kết bạn</button>
       </div>
     </div>
   )

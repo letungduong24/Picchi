@@ -153,7 +153,7 @@ const Friend = () => {
                   id="searchInput"
                 />
                 <button 
-                  className="bg-(--color-violet) text-white font-bold text-sm px-[14px] py-[8px] rounded-[20px] cursor-pointer" 
+                  className="bg-(--color-violet) shadow text-white font-bold text-sm px-[14px] py-[8px] rounded-[20px] cursor-pointer hover:bg-(--color-lviolet) duration-300 transition-all" 
                   type="button"
                   onClick={() => handleSearch(document.getElementById('searchInput').value)}
                 >

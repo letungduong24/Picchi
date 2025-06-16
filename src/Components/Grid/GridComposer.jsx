@@ -5,8 +5,8 @@ import Default from '../../assets/default.png';
 import useErrorStore from '../../store/errorStore';
 import useSuccessStore from '../../store/successStore';
 import useConfirmStore from '../../store/confirmStore';
-import { FiArrowLeft } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
+import html2canvas from 'html2canvas';
 
 const GridComposer = () => {
   const [images, setImages] = React.useState(Array(9).fill(null));
@@ -77,22 +77,38 @@ const GridComposer = () => {
     });
   };
 
-  const handleDownload = () => {
-    if (isFirstDownloadAttempt) {
+  const handleDownload = async () => {
+    try {
+      const gridElement = document.getElementById('image-grid');
+      if (!gridElement) return;
+
+      const canvas = await html2canvas(gridElement, {
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: null,
+        scale: 2, // Higher quality
+      });
+
+      const image = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.href = image;
+      link.download = 'grid-image.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      showSuccess({
+        title: 'Tải lưới ảnh',
+        content: 'Tải lưới ảnh thành công',
+        button: 'Đóng'
+      });
+    } catch (error) {
       showError({
         title: 'Tải lưới ảnh',
         content: 'Tải về thất bại, vui lòng thử lại sau',
         button: 'Đóng',
       });
-      setIsFirstDownloadAttempt(false);
-      return;
     }
-    showSuccess({
-      title: 'Tải lưới ảnh',
-      content: 'Tải lưới ảnh thành công',
-      button: 'Đóng',
-      onClose: () => navigate('/'),
-    });
   };
 
   const handleCancel = () => {
@@ -108,27 +124,37 @@ const GridComposer = () => {
     });
   };
 
-  const handlePost = () => {
-    navigate('/create-story');
+  const handlePost = async () => {
+    try {
+      const gridElement = document.getElementById('image-grid');
+      if (!gridElement) return;
+
+      const canvas = await html2canvas(gridElement, {
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: null,
+        scale: 2, // Higher quality
+      });
+
+      const image = canvas.toDataURL('image/png');
+      navigate('/create-story', { state: { initImage: image } });
+    } catch (error) {
+      showError({
+        title: 'Tạo lưới ảnh',
+        content: 'Không thể tạo ảnh, vui lòng thử lại sau',
+        button: 'Đóng',
+      });
+    }
   };
 
   if (isGridCreated) {
     return (
-      <GridWrap>
-        <div className="relative bg-white rounded-[20px] p-[18px] w-[546px] mx-auto flex flex-col gap-[10px]">
-          <button
-            className="absolute left-[-520px] top-[25px] w-[60px] h-[60px] flex items-center justify-center rounded-full border-2 border-black bg-white text-black text-[32px] cursor-pointer hover:bg-gray-100 transition shadow"
-            onClick={() => { setIsGridCreated(false); setIsFirstAttempt(true); }}
-            aria-label="Quay lại"
-            type="button"
-            style={{ zIndex: 10 }}
-          >
-            <FiArrowLeft />
-          </button>
-          <div className="grid grid-cols-3 gap-[10px] mt-[10px]">
+      <GridWrap isCreatedGrid={isGridCreated} setIsFirstAttempt={setIsFirstAttempt} setIsGridCreated={setIsGridCreated}>
+        <div className="relative bg-white rounded-[20px] p-[18px] w-[546px] mx-auto flex flex-col h-full">
+          <div id="image-grid" className="grid grid-cols-3 gap-[10px] flex-1">
             {images.map((img, idx) => (
               <div key={idx} className="w-full aspect-[3/4] bg-[#D9D9D9] rounded-[5px] overflow-hidden flex items-center justify-center">
-                {img && <img src={img} alt="" className="w-full h-full object-cover" />}
+                {img && <img src={img} alt="" className="w-full h-full object-cover" crossOrigin="anonymous" />}
               </div>
             ))}
           </div>
@@ -147,9 +173,9 @@ const GridComposer = () => {
 
   return (
     <GridWrap>
-      <form onSubmit={handleSubmit}>
-        <div className="bg-white rounded-[20px] p-[18px] w-[546px] mx-auto flex flex-col gap-[10px]">
-          <div className="grid grid-cols-3 gap-[10px]">
+      <form onSubmit={handleSubmit} className="h-full">
+        <div className="bg-white rounded-[20px] p-[18px] w-[546px] mx-auto flex flex-col h-full">
+          <div className="grid grid-cols-3 gap-[10px] flex-1">
             {images.map((img, idx) => (
               <GridImage
                 key={idx}
@@ -163,12 +189,12 @@ const GridComposer = () => {
             ))}
           </div>
           <div className="grid grid-cols-2 gap-[10px] mt-[10px]">
-            <button type="button" onClick={handleCancel} className={`bg-white border font-bold p-[18px] rounded-[20px] hover:bg-violet-100 transition-all duration-300 cursor-pointer ${hasAnyImage ? '' : 'opacity-40 pointer-events-none'}`} disabled={!hasAnyImage}>
+            <button type="button" onClick={handleCancel} className={`bg-white border font-bold p-[18px] rounded-[20px] hover:bg-gray-100 shadow transition-all duration-300 cursor-pointer ${hasAnyImage ? '' : 'opacity-40 pointer-events-none'}`} disabled={!hasAnyImage}>
               Hủy
             </button>
             <button
               type="submit"
-              className={`bg-(--color-violet) text-white font-bold p-[18px] rounded-[20px] cursor-pointer hover:bg-[#58467e] duration-300 transition-all ${isFull ? '' : 'opacity-40 pointer-events-none'}`}
+              className={`bg-(--color-violet) shadow text-white font-bold p-[18px] rounded-[20px] cursor-pointer hover:bg(--color-lviolet) shadow duration-300 transition-all ${isFull ? '' : 'opacity-40 pointer-events-none'}`}
               disabled={!isFull}
             >
               Tạo lưới ảnh
